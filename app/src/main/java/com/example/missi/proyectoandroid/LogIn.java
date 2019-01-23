@@ -301,7 +301,7 @@ public class LogIn extends AppCompatActivity implements LoaderCallbacks<Cursor>,
                 break;
             }
             case R.id.logInButton:{
-                this.authenticationFirebase.logIn(this.mEmailView.getText().toString(),this.mPasswordView.getText().toString());
+                this.authenticationFirebase.logIn(this.mEmailView.getText().toString(),this.mPasswordView.getText().toString(),"Misael","Harinero","1999-01-12");
                 break;
             }
         }

@@ -1,5 +1,6 @@
 package com.example.missi.proyectoandroid.connectionFirebase;
 
+import com.google.firebase.Timestamp;
 import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.util.HashMap;
@@ -14,7 +15,7 @@ public class FireStoreController {
     private void initFirestore(){
         this.db = FirebaseFirestore.getInstance();
     }
-    public void insertUser(String name, String surname, String date,String uid){
+    public void insertUser(String name, String surname, Timestamp date, String uid){
         Map<String,Object> userData = new HashMap<>();
         userData.put("name",name);
         userData.put("surname",surname);
