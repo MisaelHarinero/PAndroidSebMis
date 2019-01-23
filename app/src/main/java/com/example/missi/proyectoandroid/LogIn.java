@@ -69,6 +69,7 @@ public class LogIn extends AppCompatActivity implements LoaderCallbacks<Cursor>,
     private View mLoginFormView;
     private AuthenticationFirebase authenticationFirebase;
     private SignInButton button;
+    private Button logIn;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -102,6 +103,8 @@ public class LogIn extends AppCompatActivity implements LoaderCallbacks<Cursor>,
         mProgressView = findViewById(R.id.login_progress);
         button = findViewById(R.id.googleButton);
         button.setOnClickListener(this);
+        logIn = findViewById(R.id.logInButton);
+        logIn.setOnClickListener(this);
     }
 
     private void populateAutoComplete() {
@@ -194,9 +197,10 @@ public class LogIn extends AppCompatActivity implements LoaderCallbacks<Cursor>,
         } else {
             // Show a progress spinner, and kick off a background task to
             // perform the user login attempt.
-            showProgress(true);
-            mAuthTask = new UserLoginTask(email, password);
-            mAuthTask.execute((Void) null);
+            boolean correcto = this.authenticationFirebase.logInEmail(email,password);
+            if (!correcto){
+                Toast.makeText(this, "No te has Podido logear correctamente", Toast.LENGTH_SHORT).show();
+            }
         }
     }
 
@@ -296,6 +300,10 @@ public class LogIn extends AppCompatActivity implements LoaderCallbacks<Cursor>,
                 this.authenticationFirebase.logInGoogle(this);
                 break;
             }
+            case R.id.logInButton:{
+                this.authenticationFirebase.logIn(this.mEmailView.getText().toString(),this.mPasswordView.getText().toString());
+                break;
+            }
         }
     }
 
@@ -381,9 +389,10 @@ public class LogIn extends AppCompatActivity implements LoaderCallbacks<Cursor>,
         super.onStart();
         this.authenticationFirebase = new AuthenticationFirebase(this);
         if (this.authenticationFirebase.getUser() != null){
-            Toast.makeText(this, this.authenticationFirebase.getUser().getDisplayName(), Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, this.authenticationFirebase.getUser().getEmail(), Toast.LENGTH_SHORT).show();
         }
         this.authenticationFirebase.logOut(this);
+
     }
 }
 

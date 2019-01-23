@@ -116,4 +116,23 @@ public class AuthenticationFirebase {
     public void setUser(FirebaseUser user) {
         this.user = user;
     }
+    public void logIn(final String email, final String password){
+        this.auth.createUserWithEmailAndPassword(email,password).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
+            @Override
+            public void onComplete(@NonNull Task<AuthResult> task) {
+                if (task.isSuccessful()){
+                    auth.signInWithEmailAndPassword(email,password);
+                    user = auth.getCurrentUser();
+                    FireStoreController controller = new FireStoreController();
+                    controller.insertUser("Misael","Harinero","1999-01-12",user.getUid());
+                }
+            }
+        });
+
+       // this.user.sendEmailVerification();
+
+    }
+    public boolean comprobarVerificacionEmail(){
+        return this.user.isEmailVerified();
+    }
 }
