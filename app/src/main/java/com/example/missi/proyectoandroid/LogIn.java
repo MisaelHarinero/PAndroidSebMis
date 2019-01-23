@@ -3,8 +3,10 @@ package com.example.missi.proyectoandroid;
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
 import android.annotation.TargetApi;
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.app.LoaderManager.LoaderCallbacks;
@@ -28,6 +30,10 @@ import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
+
+import com.example.missi.proyectoandroid.connectionFirebase.AuthenticationFirebase;
+import com.google.android.gms.common.SignInButton;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -37,7 +43,7 @@ import static android.Manifest.permission.READ_CONTACTS;
 /**
  * A login screen that offers login via email/password.
  */
-public class LogIn extends AppCompatActivity implements LoaderCallbacks<Cursor> {
+public class LogIn extends AppCompatActivity implements LoaderCallbacks<Cursor>, OnClickListener {
 
     /**
      * Id to identity READ_CONTACTS permission request.
@@ -61,6 +67,8 @@ public class LogIn extends AppCompatActivity implements LoaderCallbacks<Cursor> 
     private EditText mPasswordView;
     private View mProgressView;
     private View mLoginFormView;
+    private AuthenticationFirebase authenticationFirebase;
+    private SignInButton button;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -92,6 +100,8 @@ public class LogIn extends AppCompatActivity implements LoaderCallbacks<Cursor> 
 
         mLoginFormView = findViewById(R.id.login_form);
         mProgressView = findViewById(R.id.login_progress);
+        button = findViewById(R.id.googleButton);
+        button.setOnClickListener(this);
     }
 
     private void populateAutoComplete() {
@@ -279,6 +289,25 @@ public class LogIn extends AppCompatActivity implements LoaderCallbacks<Cursor> 
         mEmailView.setAdapter(adapter);
     }
 
+    @Override
+    public void onClick(View v) {
+        switch (v.getId()){
+            case R.id.googleButton:{
+                this.authenticationFirebase.logInGoogle(this);
+                break;
+            }
+        }
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        boolean suscesfull = this.authenticationFirebase.googleLogInActivityResult(requestCode,data);
+        if (!suscesfull){
+            Toast.makeText(this, "No se ha podido logear Con google", Toast.LENGTH_SHORT).show();
+        }
+        Toast.makeText(this,this.authenticationFirebase.getUser().getEmail() , Toast.LENGTH_SHORT).show();
+    }
 
     private interface ProfileQuery {
         String[] PROJECTION = {
@@ -345,6 +374,16 @@ public class LogIn extends AppCompatActivity implements LoaderCallbacks<Cursor> 
             mAuthTask = null;
             showProgress(false);
         }
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        this.authenticationFirebase = new AuthenticationFirebase(this);
+        if (this.authenticationFirebase.getUser() != null){
+            Toast.makeText(this, this.authenticationFirebase.getUser().getDisplayName(), Toast.LENGTH_SHORT).show();
+        }
+        this.authenticationFirebase.logOut(this);
     }
 }
 
