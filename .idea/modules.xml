@@ -2,7 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/PAndroidSebMis.iml" filepath="$PROJECT_DIR$/PAndroidSebMis.iml" />
+      <module fileurl="file://$PROJECT_DIR$/Compas.iml" filepath="$PROJECT_DIR$/Compas.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
     </modules>
   </component>

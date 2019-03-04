@@ -1,3 +1,50 @@
 <resources>
     <string name="app_name">ProyectoAndroid</string>
+    <string name="title_activity_log_in">Sign in</string>
+    <!-- Strings related to login -->
+    <string name="prompt_email">Email</string>
+    <string name="prompt_password">Password</string>
+    <string name="action_sign_in">Sign in</string>
+    <string name="action_sign_in_short">Sign in</string>
+    <string name="action_log_in">Log in</string>
+    <string name="error_invalid_email">This email address is invalid</string>
+    <string name="error_invalid_password">This password is too short</string>
+    <string name="error_incorrect_password">This password is incorrect</string>
+    <string name="error_field_required">This field is required</string>
+    <string name="permission_rationale">"Contacts permissions are needed for providing email
+        completions."
+    </string>
+    <string name="registerTitle">REGISTRARSE</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+
+    <!-- Fragment verification Mail-->
+    <string name="errorMssg">No has validado el mail todavia, si no le ha llegado nada pulse reenviar</string>
+    <string name="verificacionMail">VERIFICACION MAIL</string>
+    <string name="reenviar">RESEND</string>
+    <string name="continuar">CONTINUE</string>
+    <!--  Fragment Log IN-->
+    <string name="register">LOG IN</string>
+    <string name="name">NAME: </string>
+    <string name="surname">SURNAME: </string>
+    <string name="birthdate">BIRTHDATE</string>
+    <string name="email">EMAIL: </string>
+    <string name="password">PASSWORD: </string>
+    <string name="repeatpass">REPEAT PASSWORD: </string>
+    <string name="accept">Aceptar la politica de Privacidade de la Empresa y que alamcenemos sus datos</string>
+    <string name="title_activity_main">COMPAS</string>
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+    <string name="nav_header_title">Android Studio</string>
+    <string name="nav_header_subtitle">android.studio@android.com</string>
+    <string name="nav_header_desc">Navigation header</string>
+    <string name="action_settings">Settings</string>
+    <string name="logOut">LogOut</string>
+    <string name="editUser">User Data</string>
+    <string name="tag">TAG_USER: </string>
+    <string name="karma">KARMA: </string>
+    <string name="aceptar">ACPETAR: </string>
+    <string name="myticket">Mis Tickets</string>
+    <string name="ticketNoAtendidos">Tickets No Atendidos</string>
 </resources>
