@@ -40,11 +40,12 @@ public class AuthenticationFirebase {
     public AuthenticationFirebase(Activity activity) {
         initFirebaseAuth();
         // Configure Google Sign In
-        this.gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN).requestIdToken(activity.getString(R.string.default_web_client_id))
+        this.gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN).requestIdToken(activity.getString(R.string.default_web_client))
                 .requestEmail()
                 .build();
 
         this.clientGoogle = GoogleSignIn.getClient(activity, gso);
+
     }
 
     /**
@@ -83,6 +84,7 @@ public class AuthenticationFirebase {
         Toast.makeText(context, "By by User", Toast.LENGTH_SHORT).show();
         this.auth.signOut();
         this.clientGoogle.signOut();
+        chargeUser();
     }
 
     /**
@@ -94,8 +96,14 @@ public class AuthenticationFirebase {
      * @return : boolean
      */
     public boolean logInEmail(String email, String password) {
-        boolean correcto = true;
-        correcto = this.auth.signInWithEmailAndPassword(email, password).isSuccessful();
+         boolean correcto = true;
+         this.auth.signInWithEmailAndPassword(email, password).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
+            @Override
+            public void onComplete(@NonNull Task<AuthResult> task) {
+                chargeUser();
+            }
+        });
+
         return correcto;
     }
 
@@ -168,7 +176,7 @@ public class AuthenticationFirebase {
      * @param password : String
      * @param name : String
      * @param surname : String
-     * @param date : String 
+     * @param date : String
      */
     public void logIn(final String email, final String password, String name, String surname, final String date) {
         this.auth.createUserWithEmailAndPassword(email, password).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
@@ -179,6 +187,7 @@ public class AuthenticationFirebase {
                     Timestamp dateTime = new Timestamp(java.sql.Date.valueOf(date));
                     user = auth.getCurrentUser();
                     user.sendEmailVerification();
+                    System.out.println("Hola");
                     FireStoreController controller = new FireStoreController();
                     controller.insertUser("Misael", "Harinero", dateTime, user.getUid());
                 }
